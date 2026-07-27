@@ -1,0 +1,24 @@
+# Environment Secrets
+.env
+*.env
+macrolens-backend/.env
+
+# Python & Virtual Environments
+macrolens-backend/venv/
+macrolens-backend/__pycache__/
+*.pyc
+
+# Node & React Native Dependencies
+node_modules/
+MacroLens/node_modules/
+.expo/
+MacroLens/.expo/
+
+# Native iOS/Android Builds
+ios/
+android/
+MacroLens/ios/
+MacroLens/android/
+
+# macOS System Files
+.DS_Store
