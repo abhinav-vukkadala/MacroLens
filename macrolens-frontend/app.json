@@ -51,7 +51,13 @@
       ],
       "expo-image",
       "expo-web-browser",
-      "expo-status-bar"
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "MacroLens reads the food photo you choose so it can estimate its nutrition.",
+          "cameraPermission": "MacroLens uses the camera to photograph your meal so it can estimate its nutrition."
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,

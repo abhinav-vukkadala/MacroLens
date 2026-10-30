@@ -8,3 +8,4 @@ export interface Profile { sex: Sex; age: number; heightIn: number; weightLb: nu
 export interface Settings { profile: Profile; targets: Targets; tracked: Tracked }
 export interface Meal { id: string; ts: number; name: string; uri?: string; calories: number; protein: number; carbs: number; fat: number }
 export type MealDraft = Omit<Meal, 'id' | 'ts' | 'uri'>;
+export interface WeightEntry { id: string; ts: number; lb: number }

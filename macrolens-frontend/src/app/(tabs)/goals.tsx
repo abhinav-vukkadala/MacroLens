@@ -2,14 +2,15 @@ import { useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { Switch, Text, View } from 'react-native';
 import { Button } from '@/components/ui/Button';
-import { Card } from '@/components/ui/Card';
+import { Paper } from '@/components/ui/Paper';
 import { Chip } from '@/components/ui/Chip';
 import { NumberField } from '@/components/ui/NumberField';
 import { Screen } from '@/components/ui/Screen';
 import { Goal, MetricKey, Profile, Sex, Targets } from '@/data/types';
 import { useProfile } from '@/hooks/useProfile';
 import { METRICS, recommend } from '@/lib/nutrition';
-import { serif, text, useColors } from '@/theme';
+import { mono, serif, text, useColors } from '@/theme';
+import { paper } from '@/theme/colors';
 
 const ACTIVITY = [{ v: 1.2, l: 'Mostly sitting' }, { v: 1.375, l: 'Light, 1-3 days/wk' }, { v: 1.55, l: 'Moderate, 3-5 days/wk' }, { v: 1.725, l: 'Hard, 6-7 days/wk' }];
 const GOALS: { v: Goal; l: string; d: string }[] = [
@@ -20,7 +21,7 @@ const GOALS: { v: Goal; l: string; d: string }[] = [
 
 const Label = ({ children }: { children: string }) => {
   const c = useColors();
-  return <Text style={{ color: c.sub, fontSize: text.label, fontWeight: '700', letterSpacing: 0.5 }}>{children}</Text>;
+  return <Text style={{ color: c.sub, fontSize: text.label, fontWeight: '700', letterSpacing: 1, fontFamily: mono }}>{children}</Text>;
 };
 
 export default function Goals() {
@@ -77,18 +78,18 @@ export default function Goals() {
         </View>
         <Text style={{ color: c.sub, fontSize: 13 }}>{GOALS.find((g) => g.v === goal)?.d}</Text>
       </View>
-      <Card style={{ gap: 12 }}>
-        <Text style={{ color: c.ink, fontWeight: '700', fontSize: 16 }}>What to track and daily targets</Text>
-        <Text style={{ color: c.sub, fontSize: 13 }}>{rec ? 'Prefilled with a recommendation for you. Edit any number.' : 'Fill in your stats above to see a recommendation.'}</Text>
+      <Paper style={{ gap: 12 }}>
+        <Text style={{ color: paper.ink, fontWeight: '700', fontSize: 15, letterSpacing: 2, fontFamily: mono }}>DAILY ORDER</Text>
+        <Text style={{ color: paper.sub, fontSize: 13 }}>{rec ? 'Prefilled with a recommendation for you. Edit any number.' : 'Fill in your stats above to see a recommendation.'}</Text>
         {METRICS.map((m) => (
           <View key={m.key} style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Switch value={track[m.key]} onValueChange={(v) => setTrack({ ...track, [m.key as MetricKey]: v })} trackColor={{ true: c[m.key] }} />
-            <Text style={{ color: c.ink, flex: 1, marginLeft: 12, fontSize: 15 }}>{m.label}</Text>
+            <Text style={{ color: paper.ink, flex: 1, marginLeft: 12, fontSize: 15 }}>{m.label}</Text>
             <NumberField value={t ? String(t[m.key]) : ''} editable={track[m.key]} align="right" width={84} onChange={(v) => t && setT({ ...t, [m.key]: v })} />
-            <Text style={{ color: c.sub, width: 36, marginLeft: 6 }}>{m.unit}</Text>
+            <Text style={{ color: paper.sub, width: 36, marginLeft: 6 }}>{m.unit}</Text>
           </View>
         ))}
-      </Card>
+      </Paper>
       <Button label="Save goals" disabled={!valid || !t} onPress={() => { if (t) { save({ profile: draft, targets: t, tracked: track }); router.replace('/'); } }} />
       <Text style={{ color: c.sub, fontSize: 12, lineHeight: 17 }}>Targets use the Mifflin-St Jeor equation and standard protein ranges. They are estimates, not medical advice.</Text>
     </Screen>

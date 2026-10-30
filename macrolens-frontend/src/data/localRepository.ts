@@ -1,9 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Repository } from './repository';
-import { Meal, Settings } from './types';
+import { Meal, Settings, WeightEntry } from './types';
 
 const SETTINGS = 'macrolens:settings';
 const MEALS = 'macrolens:meals';
+const WEIGHTS = 'macrolens:weights';
 
 async function read<T>(key: string, fallback: T): Promise<T> {
   try {
@@ -21,4 +22,7 @@ export const localRepository: Repository = {
   addMeal: async (m) => AsyncStorage.setItem(MEALS, JSON.stringify([m, ...(await read<Meal[]>(MEALS, []))])),
   updateMeal: async (m) => AsyncStorage.setItem(MEALS, JSON.stringify((await read<Meal[]>(MEALS, [])).map((x) => (x.id === m.id ? m : x)))),
   deleteMeal: async (id) => AsyncStorage.setItem(MEALS, JSON.stringify((await read<Meal[]>(MEALS, [])).filter((x) => x.id !== id))),
+  getWeights: () => read<WeightEntry[]>(WEIGHTS, []),
+  addWeight: async (w) => AsyncStorage.setItem(WEIGHTS, JSON.stringify([w, ...(await read<WeightEntry[]>(WEIGHTS, []))])),
+  deleteWeight: async (id) => AsyncStorage.setItem(WEIGHTS, JSON.stringify((await read<WeightEntry[]>(WEIGHTS, [])).filter((x) => x.id !== id))),
 };

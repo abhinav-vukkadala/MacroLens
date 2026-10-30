@@ -1,7 +1,7 @@
 import { MealDraft } from '@/data/types';
- 
+
 const num = (v: unknown) => Math.round(parseFloat(String(v).replace(/[^\d.]/g, '')) || 0);
- 
+
 // Tolerates code fences or extra text around the model's JSON.
 export function parseResult(raw: unknown): MealDraft {
   const text = typeof raw === 'string' ? raw : JSON.stringify(raw);

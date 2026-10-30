@@ -3,21 +3,22 @@ import { Image, Text, View } from 'react-native';
 import Animated, { Easing, useAnimatedStyle, useReducedMotion, useSharedValue, withTiming } from 'react-native-reanimated';
 import { ServingsStepper } from '@/components/ServingsStepper';
 import { Button } from '@/components/ui/Button';
+import { Leader } from '@/components/ui/Leader';
+import { Dashes } from '@/components/ui/Paper';
 import { MealDraft } from '@/data/types';
 import { METRICS, scale } from '@/lib/nutrition';
 import { mono, useColors } from '@/theme';
 
-const PAPER = '#FBF8F0';
-const INK = '#2A2620';
+const PAPER = '#FFFDF6';
+const INK = '#1E1A14';
 const TEETH = 12;
 
-const Dashes = () => <View style={{ borderBottomWidth: 1, borderStyle: 'dashed', borderColor: INK, opacity: 0.4, marginVertical: 12 }} />;
 
 function Line({ label, value }: { label: string; value: string }) {
   return (
     <View style={{ flexDirection: 'row', alignItems: 'flex-end', marginVertical: 3 }}>
       <Text style={{ fontFamily: mono, color: INK, fontSize: 14 }}>{label}</Text>
-      <View style={{ flex: 1, borderBottomWidth: 1, borderStyle: 'dotted', borderColor: INK, opacity: 0.45, marginHorizontal: 6, marginBottom: 4 }} />
+      <Leader />
       <Text style={{ fontFamily: mono, color: INK, fontSize: 14, fontWeight: '700' }}>{value}</Text>
     </View>
   );
@@ -49,13 +50,13 @@ export function ReceiptCard({ draft, uri, onLog, onDiscard }: { draft: MealDraft
             }}>
             <View style={{ backgroundColor: PAPER, padding: 20, paddingTop: 24 }}>
               <Text style={{ fontFamily: mono, color: INK, textAlign: 'center', fontSize: 18, fontWeight: '700', letterSpacing: 3 }}>MACROLENS</Text>
-              <Text style={{ fontFamily: mono, color: INK, textAlign: 'center', fontSize: 12, opacity: 0.6, marginTop: 2 }}>
+              <Text style={{ fontFamily: mono, textAlign: 'center', fontSize: 12, color: '#4F473B', marginTop: 2 }}>
                 {new Date().toLocaleString(undefined, { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }).toUpperCase()}
               </Text>
               <Dashes />
               {uri ? <Image source={{ uri }} style={{ width: '100%', height: 130, borderRadius: 4, marginBottom: 12 }} /> : null}
               <Text style={{ fontFamily: mono, color: INK, fontSize: 16, fontWeight: '700' }}>{draft.name.toUpperCase()}</Text>
-              <Text style={{ fontFamily: mono, color: INK, fontSize: 12, opacity: 0.6, marginBottom: 8 }}>{`${servings} x SERVING (ESTIMATE)`}</Text>
+              <Text style={{ fontFamily: mono, fontSize: 12, color: '#4F473B', marginBottom: 8 }}>{`${servings} x SERVING (ESTIMATE)`}</Text>
               {METRICS.filter((m) => m.key !== 'calories').map((m) => <Line key={m.key} label={m.label.toUpperCase()} value={`${shown[m.key]}g`} />)}
               <Dashes />
               <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' }}>
